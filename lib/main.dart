@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:mountdaki_flutter/views/account/account_page.dart';
+import 'package:mountdaki_flutter/views/account/login_page.dart';
+import 'package:mountdaki_flutter/views/account/register_page.dart';
+import 'package:mountdaki_flutter/views/main_page.dart';
 
 void main() {
-  runApp(const MountdakiApp());
+  runApp(const MyApp());
 }
 
-class MountdakiApp extends StatelessWidget {
-  const MountdakiApp({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp();
+    return MaterialApp(
+      title: 'Mountdaki',
+      initialRoute: '/',
+      routes: {
+        '/': (context) => MainPage(),
+        '/login': (context) => LoginPage(),
+        '/register': (context) => RegisterPage(),
+        '/account': (context) => AccountPage(),
+      },
+    );
   }
 }
