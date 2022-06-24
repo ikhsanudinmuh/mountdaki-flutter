@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mountdaki_flutter/config.dart';
 import 'package:mountdaki_flutter/models/account/login_request_model.dart';
 import 'package:mountdaki_flutter/services/api_service.dart';
+import 'package:mountdaki_flutter/views/account/account_page.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 
@@ -169,10 +170,14 @@ class _LoginPageState extends State<LoginPage> {
                     });
 
                     if (response) {
-                      Navigator.pushNamedAndRemoveUntil(
+                      FormHelper.showSimpleAlertDialog(
                         context,
-                        '/account',
-                        (route) => false,
+                        Config.appName,
+                        'Login berhasil',
+                        'OK',
+                        () {
+                          Navigator.pushNamed(context, '/');
+                        },
                       );
                     } else {
                       FormHelper.showSimpleAlertDialog(
@@ -229,6 +234,7 @@ class _LoginPageState extends State<LoginPage> {
   bool validateAndSave() {
     final form = globalFormKey.currentState;
     if (form!.validate()) {
+      form.save();
       return true;
     } else {
       return false;

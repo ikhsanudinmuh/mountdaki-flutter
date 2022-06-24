@@ -5,6 +5,7 @@ import 'package:mountdaki_flutter/models/account/login_request_model.dart';
 import 'package:mountdaki_flutter/models/account/login_response_model.dart';
 import 'package:mountdaki_flutter/models/account/register_request_model.dart';
 import 'package:mountdaki_flutter/models/account/register_response_model.dart';
+import 'package:mountdaki_flutter/models/account/user_response_model.dart';
 import 'package:mountdaki_flutter/models/mountain/mountain.dart';
 import 'package:mountdaki_flutter/services/shared_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,12 +23,21 @@ class ApiService {
     var response = await client.post(
       url,
       headers: requestHeaders,
-      body: model.toJson(),
+      body: jsonEncode(model.toJson()),
     );
 
     if (response.statusCode == 200) {
       await SharedService.setLoginDetails(loginResponseJson(response.body));
 
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  static Future<bool> isLoggedIn() async {
+    var login = await SharedService.isLoggedIn();
+    if (login) {
       return true;
     } else {
       return false;
@@ -45,7 +55,7 @@ class ApiService {
     var response = await client.post(
       url,
       headers: requestHeaders,
-      body: model.toJson(),
+      body: jsonEncode(model.toJson()),
     );
 
     return registerResponseModel(response.body);
@@ -67,5 +77,23 @@ class ApiService {
     } else {
       throw 'Data gunung tidak ditemukan';
     }
+  }
+
+  static Future<UserResponseModel> getUserProfile() async {
+    var loginDetails = await SharedService.loginDetails();
+
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${loginDetails!.data!.accessToken}',
+    };
+
+    var url = Uri.http(Config.apiUrl, '/api/users/${loginDetails.data!.id}');
+
+    var response = await client.get(
+      url,
+      headers: requestHeaders,
+    );
+
+    return userResponseJson(response.body);
   }
 }

@@ -23,7 +23,6 @@ class _RegisterPageState extends State<RegisterPage> {
   String? name;
   String? email;
   String? password;
-  String? confirm_password;
 
   @override
   Widget build(BuildContext context) {
@@ -175,44 +174,6 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 5),
-            child: FormHelper.inputFieldWidget(
-              context,
-              'confirm_password',
-              'Ketik Ulang Password',
-              (onValidatedVal) {
-                if (onValidatedVal.isEmpty && onValidatedVal == null) {
-                  return 'Password tidak boleh kosong';
-                } else if (onValidatedVal != password) {
-                  return 'Password harus sama';
-                }
-                return null;
-              },
-              (onSavedVal) {
-                confirm_password = onSavedVal;
-              },
-              prefixIcon: const Icon(Icons.key),
-              showPrefixIcon: true,
-              prefixIconColor: Colors.white,
-              borderColor: Colors.white,
-              borderFocusColor: Colors.white,
-              textColor: Colors.white,
-              hintColor: Colors.white.withOpacity(0.7),
-              obscureText: hideConfirmPassword,
-              suffixIcon: IconButton(
-                onPressed: () {
-                  setState(() {
-                    hideConfirmPassword = !hideConfirmPassword;
-                  });
-                },
-                color: Colors.white.withOpacity(0.7),
-                icon: Icon(
-                  hideConfirmPassword ? Icons.visibility_off : Icons.visibility,
-                ),
-              ),
-            ),
-          ),
           SizedBox(
             height: 20,
           ),
@@ -229,7 +190,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     name: name!,
                     email: email!,
                     password: password!,
-                    confirmPassword: confirm_password!,
                   );
 
                   ApiService.register(model).then((response) {
@@ -244,11 +204,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         'Pendaftaran berhasil, silahkan login!',
                         'OK',
                         () {
-                          Navigator.pushNamedAndRemoveUntil(
-                            context,
-                            '/login',
-                            (route) => false,
-                          );
+                          Navigator.pushNamed(context, '/');
                         },
                       );
                     } else {
@@ -306,6 +262,7 @@ class _RegisterPageState extends State<RegisterPage> {
   bool validateAndSave() {
     final form = globalFormKey.currentState;
     if (form!.validate()) {
+      form.save();
       return true;
     } else {
       return false;

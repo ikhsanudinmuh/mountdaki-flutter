@@ -35,10 +35,5 @@ class SharedService {
 
   static Future<void> logout(BuildContext context) async {
     await APICacheManager().deleteCache('login_details');
-    Navigator.pushNamedAndRemoveUntil(
-      context,
-      '/login',
-      (route) => false,
-    );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mountdaki_flutter/models/mountain/mountain.dart';
+import 'package:mountdaki_flutter/services/api_service.dart';
+import 'package:mountdaki_flutter/services/shared_service.dart';
 
 class DetailMountain extends StatelessWidget {
   final Mountain mountain;
@@ -55,11 +57,19 @@ class DetailMountain extends StatelessWidget {
                     ],
                   ),
                 ),
-                Center(
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    child: Text('Daftar Pendakian'),
-                  ),
+                FutureBuilder(
+                  future: ApiService.isLoggedIn(),
+                  builder: (context, AsyncSnapshot<bool> snapshot) {
+                    if (snapshot.data == true) {
+                      return Center(
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          child: Text('Daftar Pendakian'),
+                        ),
+                      );
+                    }
+                    return const Text('');
+                  },
                 )
               ],
             ),

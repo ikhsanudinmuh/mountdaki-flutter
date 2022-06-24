@@ -1,5 +1,11 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:mountdaki_flutter/services/api_service.dart';
+import 'package:mountdaki_flutter/services/shared_service.dart';
 import 'package:mountdaki_flutter/views/account/account_page.dart';
+import 'package:mountdaki_flutter/views/account/login_page.dart';
+import 'package:mountdaki_flutter/views/climbing_registration/climbing_registration_page.dart';
 import 'package:mountdaki_flutter/views/mountain/mountain_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -9,13 +15,14 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
-  int currentIndex = 0;
-  final screens = [
-    Home(),
-    AccountPage(),
-  ];
+int currentIndex = 0;
+var screens = [
+  Home(),
+  ClimbingRegistrationPage(),
+  AccountPage(),
+];
 
+class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,6 +39,10 @@ class _MainPageState extends State<MainPage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Beranda',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list),
+            label: 'List Pendakian',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_box),

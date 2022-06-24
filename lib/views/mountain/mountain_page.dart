@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mountdaki_flutter/models/mountain/mountain.dart';
 import 'package:mountdaki_flutter/services/api_service.dart';
-import 'package:mountdaki_flutter/views/mountain/detail_mountain.dart';
+import 'package:mountdaki_flutter/views/mountain/detail_mountain_page.dart';
 
 class Home extends StatelessWidget {
   final ApiService apiService = ApiService();
