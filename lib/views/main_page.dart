@@ -9,7 +9,9 @@ import 'package:mountdaki_flutter/views/climbing_registration/climbing_registrat
 import 'package:mountdaki_flutter/views/mountain/mountain_page.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
+  // const MainPage({Key? key}) : super(key: key);
+  int? index;
+  MainPage({this.index});
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -25,6 +27,10 @@ var screens = [
 class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
+    if (widget.index != null) {
+      currentIndex = widget.index!;
+    }
+    widget.index = null;
     return Scaffold(
       body: screens[currentIndex],
       bottomNavigationBar: BottomNavigationBar(

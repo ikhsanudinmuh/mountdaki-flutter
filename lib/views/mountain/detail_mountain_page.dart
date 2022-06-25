@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mountdaki_flutter/models/mountain/mountain.dart';
 import 'package:mountdaki_flutter/services/api_service.dart';
 import 'package:mountdaki_flutter/services/shared_service.dart';
+import 'package:mountdaki_flutter/views/climbing_registration/add_climbing_registration_page.dart';
 
 class DetailMountain extends StatelessWidget {
   final Mountain mountain;
@@ -63,7 +64,16 @@ class DetailMountain extends StatelessWidget {
                     if (snapshot.data == true) {
                       return Center(
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    AddClimbingRegistrationPage(
+                                  mountain: mountain,
+                                ),
+                              ),
+                            );
+                          },
                           child: Text('Daftar Pendakian'),
                         ),
                       );
