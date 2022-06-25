@@ -75,7 +75,6 @@ class ApiService {
             (dynamic item) => Mountain.fromJson(item),
           )
           .toList();
-
       return mountains;
     } else {
       throw 'Data gunung tidak ditemukan';
@@ -120,7 +119,7 @@ class ApiService {
     return addClimbingRegistrationResponseJson(response.body);
   }
 
-  static Future<ClimbingRegistrationResponseModel>
+  static Future<List<ClimbingRegistrationResponseModel>>
       getClimbingRegistration() async {
     var loginDetails = await SharedService.loginDetails();
 
@@ -139,6 +138,18 @@ class ApiService {
       headers: requestHeaders,
     );
 
-    return climbingRegistrationResponseJson(response.body);
+    if (response.statusCode == 200) {
+      List<dynamic> body = jsonDecode(response.body)['data'];
+
+      List<ClimbingRegistrationResponseModel> climbingRegistration = body
+          .map(
+            (dynamic item) => ClimbingRegistrationResponseModel.fromJson(item),
+          )
+          .toList();
+
+      return climbingRegistration;
+    } else {
+      throw 'Data gunung tidak ditemukan';
+    }
   }
 }

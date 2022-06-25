@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:mountdaki_flutter/services/api_service.dart';
 import 'package:mountdaki_flutter/services/shared_service.dart';

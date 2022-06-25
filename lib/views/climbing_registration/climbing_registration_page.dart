@@ -17,52 +17,45 @@ class _ClimbingRegistrationPageState extends State<ClimbingRegistrationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            FutureBuilder(
-              future: ApiService.isLoggedIn(),
-              builder: (context, AsyncSnapshot<bool> snapshot) {
-                if (snapshot.data == true) {
-                  return Padding(
-                    padding: EdgeInsets.only(left: 25, top: 25),
-                    child: Column(
-                      children: [
-                        Text(
-                          'List Pendakian',
-                          style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
+        child: FutureBuilder<List<ClimbingRegistrationResponseModel>>(
+          future: ApiService.getClimbingRegistration(),
+          builder: (context, snapshot) {
+            print(snapshot.hasData);
+            if (snapshot.hasData) {
+              List<ClimbingRegistrationResponseModel> model =
+                  snapshot.requireData;
+              return ListView(
+                children: model
+                    .map(
+                      (ClimbingRegistrationResponseModel
+                              climbingRegistration) =>
+                          Card(
+                        margin: EdgeInsets.all(10),
+                        child: InkWell(
+                          onTap: () {},
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                climbingRegistration.mountainName,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              Text(climbingRegistration.schedule),
+                              Text(climbingRegistration.status),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
-                  );
-                } else {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('Silahkan masuk terlebih dahulu!'),
-                      ],
-                    ),
-                  );
-                }
-              },
-            ),
-            FutureBuilder(
-              future: ApiService.getClimbingRegistration(),
-              builder: ((
-                context,
-                AsyncSnapshot<ClimbingRegistrationResponseModel> snapshot,
-              ) {
-                if (snapshot.hasData) {
-                  return Text('ada data');
-                } else {
-                  return Text('tidak ada pendakian');
-                }
-              }),
-            )
-          ],
+                      ),
+                    )
+                    .toList(),
+              );
+            } else {
+              return Text('');
+            }
+          },
         ),
       ),
     );
