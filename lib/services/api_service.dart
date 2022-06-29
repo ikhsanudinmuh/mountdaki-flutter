@@ -152,4 +152,49 @@ class ApiService {
       throw 'Data gunung tidak ditemukan';
     }
   }
+
+  static Future<bool> climb(int id) async {
+    var loginDetails = await SharedService.loginDetails();
+
+    Map<String, String> requestHeaders = {
+      // 'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${loginDetails!.data!.accessToken}',
+    };
+
+    var url =
+        Uri.http(Config.apiUrl, '/api/climbing_registrations/climb/${id}');
+
+    var response = await client.put(
+      url,
+      headers: requestHeaders,
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  static Future<bool> done(int id) async {
+    var loginDetails = await SharedService.loginDetails();
+
+    Map<String, String> requestHeaders = {
+      // 'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${loginDetails!.data!.accessToken}',
+    };
+
+    var url = Uri.http(Config.apiUrl, '/api/climbing_registrations/done/${id}');
+
+    var response = await client.put(
+      url,
+      headers: requestHeaders,
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

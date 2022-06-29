@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mountdaki_flutter/config.dart';
 import 'package:mountdaki_flutter/models/mountain/mountain.dart';
 import 'package:mountdaki_flutter/services/api_service.dart';
 import 'package:mountdaki_flutter/views/mountain/detail_mountain_page.dart';
@@ -38,6 +39,14 @@ class Home extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            // Container(
+                            //   decoration: BoxDecoration(
+                            //     image: DecorationImage(
+                            //       image: NetworkImage(
+                            //           'http://${Config.apiUrl}/assets/images/${mountain.image}'),
+                            //     ),
+                            //   ),
+                            // ),
                             Image.asset(
                               'assets/images/${mountain.image}',
                               fit: BoxFit.fitWidth,

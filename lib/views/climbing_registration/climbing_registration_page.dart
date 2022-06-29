@@ -3,6 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:mountdaki_flutter/models/climbing_registration/climbing_registration_response_model.dart';
 import 'package:mountdaki_flutter/services/api_service.dart';
+import 'package:mountdaki_flutter/views/climbing_registration/detail_climbing_registration_page.dart';
 
 class ClimbingRegistrationPage extends StatefulWidget {
   const ClimbingRegistrationPage({Key? key}) : super(key: key);
@@ -20,7 +21,6 @@ class _ClimbingRegistrationPageState extends State<ClimbingRegistrationPage> {
         child: FutureBuilder<List<ClimbingRegistrationResponseModel>>(
           future: ApiService.getClimbingRegistration(),
           builder: (context, snapshot) {
-            print(snapshot.hasData);
             if (snapshot.hasData) {
               List<ClimbingRegistrationResponseModel> model =
                   snapshot.requireData;
@@ -32,7 +32,16 @@ class _ClimbingRegistrationPageState extends State<ClimbingRegistrationPage> {
                           Card(
                         margin: EdgeInsets.all(10),
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    DetailClimbingRegistration(
+                                  climbingRegistration: climbingRegistration,
+                                ),
+                              ),
+                            );
+                          },
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -53,7 +62,9 @@ class _ClimbingRegistrationPageState extends State<ClimbingRegistrationPage> {
                     .toList(),
               );
             } else {
-              return Text('');
+              return Center(
+                child: Text('Silahkan login terlebih dahulu!'),
+              );
             }
           },
         ),
